@@ -19,7 +19,7 @@ function loadEventListeners() {
   // Clear all tasks event
   clearAllBtn.addEventListener('click', clearTasks);
   // Clear viewed tasks event
-  clearBtn.addEventListener('click', clearViewedTasks);
+  clearBtn.addEventListener('click', clearFilteredTasks);
   // Filter tasks event
   filter.addEventListener('keyup', filterTasks);
 
@@ -143,7 +143,7 @@ function clearLocalStorage() {
   localStorage.clear();
 }
 
-function clearViewedTasks() {
+function clearFilteredTasks() {
   document.querySelectorAll('.collection-item').forEach(function(task){
     if(task.style.display === 'block'){
       task.remove();
