@@ -10,11 +10,11 @@ GAME FUNCTION:
 // Game values
 let min = 1,
     max = 10,
-    winningNum = 2,
+    winningNum = generateWinningNum(min, max),
     guessesLeft = 3;
 
 // UI elements
-const UIgame = document.querySelector('game'),
+const UIgame = document.querySelector('#game'),
       UIminNum = document.querySelector('.min-num'),
       UImaxNum = document.querySelector('.max-num'),
       UIguessBtn = document.querySelector('#guess-btn'),
@@ -25,12 +25,14 @@ const UIgame = document.querySelector('game'),
 UIminNum.textContent = min;
 UImaxNum.textContent = max;
 
+// Listen for guess
 UIguessBtn.addEventListener('click', function(){
   let guess = parseInt(UIguessInput.value);
 
   // Validate
   if (isNaN(guess) || guess < min || guess > max) {
     setMessage(`Please enter a number between ${min} and ${max}`, 'red');
+    return;
   } 
 
   // Check if won
@@ -46,9 +48,6 @@ UIguessBtn.addEventListener('click', function(){
       // Game over - lost
       
       gameOver(false, `Game over, you lost. The correct number was ${winningNum}.`);
-
-      // Disable submit 
-      UIguessBtn.disabled = true;
       
     } else{
       // Game continues
@@ -59,10 +58,22 @@ UIguessBtn.addEventListener('click', function(){
       UIguessInput.style.borderColor = 'orange';
       // Set winning message
       setMessage(`${guess} is not correct. You have ${guessesLeft} guesses left.`, 'orange');
-      
+
     }
   }
 });
+
+// Play again event Listener
+UIgame.addEventListener('mousedown', function(e) {
+  if(e.target.className === 'play-again'){
+    window.location.reload();
+  }
+});
+
+// Generate a random integer between min and max
+function generateWinningNum(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 function setMessage(msg, color) {
   UImessage.style.color = color;
@@ -80,5 +91,7 @@ function gameOver(won, msg) {
   // Set message
   setMessage(msg, color);
 
-  
+  // Play again?
+  UIguessBtn.value = 'Play Again';
+  UIguessBtn.className += 'play-again';
 }
