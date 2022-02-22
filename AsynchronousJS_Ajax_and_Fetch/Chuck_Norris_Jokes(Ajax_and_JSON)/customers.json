@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Renato Rosa",
+    "company": "123 Designs",
+    "phone": "910 000 000" 
+  },
+  {
+    "id": 2,
+    "name": "Zé Nando",
+    "company": "Agro +",
+    "phone": "910 000 001" 
+  },
+  {
+    "id": 3,
+    "name": "Ezequiel Valadas",
+    "company": "Câmara Municipal",
+    "phone": "910 000 002" 
+  }
+]
