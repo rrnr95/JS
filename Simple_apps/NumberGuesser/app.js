@@ -56,9 +56,12 @@ UIguessBtn.addEventListener('click', function(){
       UIguessInput.value = '';
       // Change border color
       UIguessInput.style.borderColor = 'orange';
-      // Set winning message
-      setMessage(`${guess} is not correct. You have ${guessesLeft} guesses left.`, 'orange');
-
+      // Set message
+      if(guess < winningNum) {
+        setMessage(`${guess} is not correct. Try aiming higher You have ${guessesLeft} guesses left.`, 'orange');
+      } else {
+        setMessage(`${guess} is not correct. Try aiming lower You have ${guessesLeft} guesses left.`, 'orange');
+      }
     }
   }
 });
