@@ -63,6 +63,16 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
     },
 
+    updateListItem: function(item) {
+      const liID = `#item-${item.id}`;
+      document.querySelector(liID).innerHTML = `
+        <strong>${item.name}: </strong> <em>${item.cals} Calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>
+      `;
+    },
+
     updateTotalCals: function(totalCals) {
       document.querySelector(UISelectors.totalCals).textContent = totalCals;
     },
@@ -78,8 +88,8 @@ const UICtrl = (function () {
     // },
 
     addCurrentItemToForm: function() {
-      document.querySelector(UISelectors.itemNameInput).value = ItemCtrl.getCUrrentItem().name;
-      document.querySelector(UISelectors.itemCalsInput).value = ItemCtrl.getCUrrentItem().cals;
+      document.querySelector(UISelectors.itemNameInput).value = ItemCtrl.getCurrentItem().name;
+      document.querySelector(UISelectors.itemCalsInput).value = ItemCtrl.getCurrentItem().cals;
       UICtrl.showEditState();
     },
 
@@ -99,7 +109,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.addBtn).style.display = 'inline';
     },
 
-    showEditState: function name(params) {
+    showEditState: function() {
       document.querySelector(UISelectors.updateBtn).style.display = 'inline';
       document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
       document.querySelector(UISelectors.backBtn).style.display = 'inline';
@@ -109,6 +119,5 @@ const UICtrl = (function () {
     getSelectors: function() {
       return UISelectors;
     }
-    
   }
 })();

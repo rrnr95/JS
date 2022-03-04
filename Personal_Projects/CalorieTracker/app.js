@@ -1,5 +1,3 @@
-// Storage Controller
-
 //App Controller 
 const App = (function (ItemCtrl, UICtrl) {
   
@@ -11,8 +9,20 @@ const App = (function (ItemCtrl, UICtrl) {
     // Add Item event
     document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
 
+    // Disable submit on <ENTER>
+    document.addEventListener('keypress', function(e) {
+      if (e.keycode === 13) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+
     // Edit icon click event
-    document.querySelector(UISelectors.itemList).addEventListener('click', itemUpdateSubmit);
+    document.querySelector(UISelectors.itemList).addEventListener('click', itemEditClick);
+
+    // Update button submit event
+    document.querySelector(UISelectors.updateBtn).addEventListener('click', itemUpdateSubmit);
 
   }
 
@@ -42,12 +52,11 @@ const App = (function (ItemCtrl, UICtrl) {
       UICtrl.clearInput();
 
     }
-
     e.preventDefault();
   }
 
-  // Update item submit
-  const itemUpdateSubmit = function(e) {
+  // Click to edit item
+  const itemEditClick = function(e) {
 
     if(e.target.classList.contains('edit-item')) {
       // Get list item id in format 'item-x'
@@ -72,6 +81,27 @@ const App = (function (ItemCtrl, UICtrl) {
       UICtrl.addCurrentItemToForm();
       
     }
+    e.preventDefault();
+  }
+
+  // Update item submit
+  const itemUpdateSubmit = function(e) {
+    // Get edit input
+    const input = UICtrl.getItemInput();
+
+    // Update in ItemCtrl
+    const updatedItem = ItemCtrl.updateItem(input.name, input.cals);
+
+    // Update in UICtrl
+    UICtrl.updateListItem(updatedItem);    
+
+    // Get total calories
+    const totalCals = ItemCtrl.getTotalCals();
+
+    // Show total calories in UI
+    UICtrl.updateTotalCals(totalCals);
+
+    UICtrl.clearEditState();
 
     e.preventDefault();
   }

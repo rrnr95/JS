@@ -53,7 +53,7 @@ const ItemCtrl = (function () {
       data.currentItem = item;
     },
 
-    getCUrrentItem(){
+    getCurrentItem(){
       return data.currentItem;
     },
 
@@ -79,6 +79,13 @@ const ItemCtrl = (function () {
       data.items.push(newItem);
 
       return newItem;
+    },
+
+    updateItem(name, cals) {
+      data.currentItem.name = name;
+      data.currentItem.cals = parseInt(cals);
+
+      return data.currentItem;
     },
 
     logData: function () {
