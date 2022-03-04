@@ -4,6 +4,9 @@ const UICtrl = (function () {
   const UISelectors = {
     itemList: '#item-list',
     addBtn: '.add-btn',
+    updateBtn: '.update-btn',
+    deleteBtn: '.delete-btn',
+    backBtn: '.back-btn',
     itemNameInput: '#item-name',
     itemCalsInput: '#item-calories',
     totalCals: '.total-calories'
@@ -69,12 +72,38 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.itemCalsInput).value = '';
     },
 
+    // addItemToForm: function(item) {
+    //   document.querySelector(UISelectors.itemNameInput).value = item.name;
+    //   document.querySelector(UISelectors.itemCalsInput).value = item.cals;
+    // },
+
+    addCurrentItemToForm: function() {
+      document.querySelector(UISelectors.itemNameInput).value = ItemCtrl.getCUrrentItem().name;
+      document.querySelector(UISelectors.itemCalsInput).value = ItemCtrl.getCUrrentItem().cals;
+      UICtrl.showEditState();
+    },
+
     hideList: function() {
-      document.querySelector(UISelectors.itemList).getElementsByClassName.display = 'none';
+      document.querySelector(UISelectors.itemList).style.display = 'none';
     },
 
     showList: function() {
-      document.querySelector(UISelectors.itemList).getElementsByClassName.display = 'block';
+      document.querySelector(UISelectors.itemList).style.display = 'block';
+    },
+
+    clearEditState: function() {
+      UICtrl.clearInput();
+      document.querySelector(UISelectors.updateBtn).style.display = 'none';
+      document.querySelector(UISelectors.deleteBtn).style.display = 'none';
+      document.querySelector(UISelectors.backBtn).style.display = 'none';
+      document.querySelector(UISelectors.addBtn).style.display = 'inline';
+    },
+
+    showEditState: function name(params) {
+      document.querySelector(UISelectors.updateBtn).style.display = 'inline';
+      document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
+      document.querySelector(UISelectors.backBtn).style.display = 'inline';
+      document.querySelector(UISelectors.addBtn).style.display = 'none';
     },
 
     getSelectors: function() {

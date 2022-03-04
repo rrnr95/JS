@@ -38,6 +38,25 @@ const ItemCtrl = (function () {
       return data.totalCals;
     },
 
+    getItemByID(id){
+      let match;
+      // Loop through the items
+      data.items.forEach(function(item) {
+        if(item.id === id) {
+          match = item;
+        }
+      })
+      return match;
+    },
+
+    setCurrentItem(item){
+      data.currentItem = item;
+    },
+
+    getCUrrentItem(){
+      return data.currentItem;
+    },
+
     addItem: function(name, cals) {
     
       // Create auto-incremented ID
