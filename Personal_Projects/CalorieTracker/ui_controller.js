@@ -78,6 +78,17 @@ const UICtrl = (function(){
       const itemID = `#item-${id}`;
       const item = document.querySelector(itemID);
       item.remove();
+
+      let listItems = document.querySelectorAll(UISelectors.listItems);
+
+      // Turn Node list into array
+      listItems = Array.from(listItems);
+
+      // Rearrange list items id's
+      for(let i = id + 1; i != listItems.length + 1; i++){
+        document.querySelector(`#item-${i}`).id = `item-${i-1}`;
+      }
+
     },
 
     clearInput: function(){
@@ -86,8 +97,11 @@ const UICtrl = (function(){
     },
 
     addItemToForm: function(){
-      document.querySelector(UISelectors.itemNameInput).value = ItemCtrl.getCurrentItem().name;
-      document.querySelector(UISelectors.itemCaloriesInput).value = ItemCtrl.getCurrentItem().calories;
+      const item = ItemCtrl.getCurrentItem();
+      document.querySelector(UISelectors.itemNameInput).value = item.name;
+      console.log('UICtrl: addItemToForm added name -> ', item.name);
+      document.querySelector(UISelectors.itemCaloriesInput).value = item.calories;
+      console.log('UICtrl: addItemToForm added calories -> ', item.calories);  
       UICtrl.showEditState();
     },
 

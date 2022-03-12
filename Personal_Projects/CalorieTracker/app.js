@@ -45,10 +45,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
       // Add item to UI list
       UICtrl.addListItem(newItem);
 
-      // Get total calories
-      const totalCalories = ItemCtrl.getTotalCalories();
-      // Add total calories to UI
-      UICtrl.showTotalCalories(totalCalories);
+      updateTotalCalories();
 
       //Store in localStorage
       StorageCtrl.storeItem(newItem);
@@ -65,6 +62,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     if(e.target.classList.contains('edit-item')){
       // Get list item id (item-0, item-1)
       const listId = e.target.parentNode.parentNode.id;
+      console.log('App: li ID -> ', listId);
 
       // Break into an array
       const listIdArr = listId.split('-');
@@ -74,6 +72,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
 
       // Get item
       const itemToEdit = ItemCtrl.getItemById(id);
+      console.log('App: Item to Edit -> ', itemToEdit);
 
       // Set current item
       ItemCtrl.setCurrentItem(itemToEdit);
@@ -96,10 +95,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     // Update UI
     UICtrl.updateListItem(updatedItem);
 
-     // Get total calories
-     const totalCalories = ItemCtrl.getTotalCalories();
-     // Add total calories to UI
-     UICtrl.showTotalCalories(totalCalories);
+    updateTotalCalories();
 
      // Update local storage
      StorageCtrl.updateItemStorage(updatedItem);
@@ -114,19 +110,16 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     // Get current item
     const currentItem = ItemCtrl.getCurrentItem();
 
-    // Delete from data structure
-    ItemCtrl.deleteItem(clientInformation);
+    // Delete from local storage
+    StorageCtrl.deleteItemFromStorage(currentItem.id);
+
+    // Sync ItemCtrl data with local storage 
+    ItemCtrl.updateDataItems();
 
     // Delete from UI
     UICtrl.deleteListItem(currentItem.id);
 
-    // Get total calories
-    const totalCalories = ItemCtrl.getTotalCalories();
-    // Add total calories to UI
-    UICtrl.showTotalCalories(totalCalories);
-
-    // Delete from local storage
-    StorageCtrl.deleteItemFromStorage(currentItem.id);
+    updateTotalCalories();
 
     UICtrl.clearEditState();
 
@@ -139,10 +132,7 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     // Delete all items from data structure
     ItemCtrl.clearAllItems();
 
-    // Get total calories
-    const totalCalories = ItemCtrl.getTotalCalories();
-    // Add total calories to UI
-    UICtrl.showTotalCalories(totalCalories);
+    updateTotalCalories();
 
     // Remove from UI
     UICtrl.removeItems();
@@ -153,6 +143,13 @@ const App = (function(ItemCtrl, StorageCtrl, UICtrl){
     // Hide UL
     UICtrl.hideList();
     
+  }
+
+  const updateTotalCalories = function() {
+    // Get total calories
+    const totalCalories = ItemCtrl.getTotalCalories();
+    // Add total calories to UI
+    UICtrl.showTotalCalories(totalCalories);
   }
 
   // Public methods

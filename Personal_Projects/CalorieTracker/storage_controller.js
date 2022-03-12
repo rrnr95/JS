@@ -30,6 +30,8 @@ const StorageCtrl = (function(){
       } else {
         items = JSON.parse(localStorage.getItem('items'));
       }
+
+      console.log('LS: getItems -> ', items);
       return items;
     },
 
@@ -50,8 +52,18 @@ const StorageCtrl = (function(){
       items.forEach(function(item, index){
         if(id === item.id){
           items.splice(index, 1);
+          for(let i = index; i != items.length; i++){
+            items[i].id -= 1;
+          }
+          return;
         }
       });
+
+      // items = items.filter(function(item){ 
+      //   return item.id != id;
+      // });
+
+
       localStorage.setItem('items', JSON.stringify(items));
     },
 

@@ -1,19 +1,16 @@
 // Item Controller
 const ItemCtrl = (function(){
   // Item Constructor
-  const Item = function(id, name, calories){
-    this.id = id;
-    this.name = name;
-    this.calories = calories;
+  class Item {
+    constructor(id, name, calories) {
+      this.id = id;
+      this.name = name;
+      this.calories = calories;
+    }
   }
 
   // Data Structure / State
   const data = {
-    // items: [
-    //   // {id: 0, name: 'Steak Dinner', calories: 1200},
-    //   // {id: 1, name: 'Cookie', calories: 400},
-    //   // {id: 2, name: 'Eggs', calories: 300}
-    // ],
     items: StorageCtrl.getItemsFromStorage(),
     currentItem: null,
     totalCalories: 0
@@ -22,8 +19,15 @@ const ItemCtrl = (function(){
   // Public methods
   return {
     getItems: function(){
+      console.log('ItemCtrl: getItems -> ', data.items);
       return data.items;
     },
+
+    updateDataItems: function() {
+      data.items = StorageCtrl.getItemsFromStorage();
+      console.log('ItemCtrl: updateDataItems -> ', data.items);
+    },
+
     addItem: function(name, calories){
       let ID;
       // Create ID
@@ -41,6 +45,8 @@ const ItemCtrl = (function(){
 
       // Add to items array
       data.items.push(newItem);
+      console.log('ItemCtrl: addItem -> ', newItem);
+      console.log('ItemCtrl: data.items -> ', data.items);
 
       return newItem;
     },
@@ -53,6 +59,7 @@ const ItemCtrl = (function(){
           found = item;
         }
       });
+      console.log('ItemCtrl: getItemByID -> ', found);
       return found;
     },
 
@@ -69,6 +76,8 @@ const ItemCtrl = (function(){
           found = item;
         }
       });
+      
+      console.log('ItemCtrl: Updated ->', found);
       return found;
     },
 
@@ -80,20 +89,23 @@ const ItemCtrl = (function(){
 
       // Get index
       const index = ids.indexOf(id);
-
+      
       // Remove item
       data.items.splice(index, 1);
     },
 
     clearAllItems: function(){
       data.items = [];
+      console.log('ItemCtrl: clearAllItems -> ', data.items);
     },
 
     setCurrentItem: function(item){
       data.currentItem = item;
+      console.log('ItemCtrl: Setting Current Item: ', data.currentItem);
     },
 
     getCurrentItem: function(){
+      console.log('ItemCtrl: Accessing Current Item: ', data.currentItem);
       return data.currentItem;
     },
 
